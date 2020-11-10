@@ -5,11 +5,11 @@
       <ul>
         <li class="pullDown">{{ pullDownMsg }}</li>
         <li v-for="item in movieList" :key="item.id">
-          <div class="pic_show" @tap="handleToDetail">
+          <div class="pic_show" @tap="handleToDetail(item.id)">
             <img :src="item.img | setWH('128.180')" />
           </div>
           <div class="info_list">
-            <h2>
+            <h2 @tap="handleToDetail(item.id)">
               {{ item.nm }}
               <img v-if="item.version" src="@/assets/maxs.png" alt="" />
             </h2>
@@ -46,37 +46,14 @@ export default {
       if (msg === "ok") {
         this.movieList = res.data.data.movieList;
         this.isLoading = false
-        this.prevCityId = cityId;
-        // this.$nextTick(() => {
-        //   var scroll = new BScroll(this.$refs.movie_body, {
-        //     tap: true,
-        //     probeType: 1,
-        //   });
-        //   scroll.on("scroll", (pos) => {
-        //     if (pos.y > 30) {
-        //       this.pullDownMsg = "正在更新中";
-        //     }
-        //   });
-        //   scroll.on("touchEnd", (pos) => {
-        //     if (pos.y > 30) {
-        //       this.axios.get("/api/movieOnInfoList?cityId=10").then((res) => {
-        //         var msg = res.data.msg;
-        //         if (msg === "ok") {
-        //           this.pullDownMsg = "更新成功";
-        //           setTimout(() => {
-        //             this.movieList = res.data.data.movieList;
-        //             this.pullDownMsg = "";
-        //           }, 1000);
-        //         }
-        //       });
-        //     }
-        //   });
-        // });
+        this.prevCityId = cityId;        
       }
     });
   },
   methods: {
-    handleToDetail() {},
+    handleToDetail(movieId) {
+      this.$router.push('/movie/detail/1/' + movieId)
+    },
   },
   handleToScroll(pos) {
     if (pos.y > 30) {
